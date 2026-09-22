@@ -1,6 +1,6 @@
 # Document LLM Chain
 
-A practice project for learning multi-stage LLM document-processing pipelines with LangChain, built while preparing for a backend/AI engineering interview.
+A practice project for learning multi-stage LLM document-processing pipelines with LangChain.
 
 ## What this project is
 
@@ -11,11 +11,12 @@ The pipeline exists to practice designing and implementing an LLM chain where ea
 Scalability and distributed-systems concerns are explicitly out of scope.
 The focus is the algorithmic process inside each stage and the end-to-end latency of running a report through the chain.
 
-This design came out of a system-design-interview-style exercise before implementation started: three stages, four core entities, no multi-company modeling, no distributed infrastructure.
+The design was scoped out before implementation started: three stages, four core entities, no multi-company modeling, no distributed infrastructure.
 
 ## Pipeline stages
 
-1. **Extract structure.** Parse the report PDF into XML, capturing headers, paragraphs, and tables as structured, positioned content.
+1. **Extract structure.** Parse the report PDF into XML, capturing headers, paragraphs, tables, and figures as structured, positioned content.
+   Text is grouped by detected column band before line-grouping, and words inside an embedded chart/illustration's bounding box are pulled into a separate `<figure>` element rather than being classified as headers or paragraphs - real multi-column sustainability reports otherwise splice unrelated columns' sentences together and misread chart data-point labels as section headers.
    Tests: XML tags open and close correctly, garbage-character frequency stays under 2%.
 2. **Classify sections.** Use an LLM to chunk the extracted XML into logical sections and assign each one a topic.
    Tests: section size stays under a defined word count, and assigned topics match a labeled fixture set.
