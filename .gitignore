@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+data/
+.pytest_cache/
+
+# Third-party sample PDF (Microsoft's public sustainability report, ~14MB) -
+# not ours to redistribute in the repo; download your own via the link in
+# the README's "Local development" section instead.
+sample_report.pdf
